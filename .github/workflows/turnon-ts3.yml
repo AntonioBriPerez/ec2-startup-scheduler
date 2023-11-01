@@ -5,8 +5,7 @@ on:
 
   schedule:
     - cron: '0 20 * * 1-4' # Start EC2 at 21:00 PM GMT+1 Mon-Thu
-    - cron: '0 19 * * 5-6' # Start EC2 at 20:00 PM GMT+1 Fri-Sat
-    - cron: '0 19 * * 0'   # Start EC2 at 20:00 PM GMT+1 Sun
+    - cron: '0 19 * * 0,5-6' # Start EC2 at 20:00 PM GMT+1 Fri-Sat and Sundays
 
 jobs:
   start-ec2:
