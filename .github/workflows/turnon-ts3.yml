@@ -2,9 +2,9 @@ name: Start EC2 Instances
 
 on:
   workflow_dispath: 
-  
+
   schedule:
-    - cron: '0 17 * * *' # This schedules the workflow to run at 17:00 every day
+    - cron: '0 16 * * *' # This schedules the workflow to run at 17:00 every day
 
 jobs:
   start-ec2:
