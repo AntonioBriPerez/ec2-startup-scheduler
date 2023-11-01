@@ -3,7 +3,7 @@ name: Stop EC2 Instances
 on:
   workflow_dispatch: 
   schedule:
-    - cron: '0 20 * * *'  # Stop EC2 instances at 04:00 AM
+    - cron: '0 1 * * *'  # Stop EC2 instances at 04:00 AM
 
 jobs:
   stop-ec2:
