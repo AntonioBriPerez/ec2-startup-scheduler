@@ -1,0 +1,32 @@
+name: Start EC2 Instances
+
+on:
+  schedule:
+    - cron: '0 17 * * *' # This schedules the workflow to run at 17:00 every day
+
+jobs:
+  start-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_AK }}
+        aws-secret-access-key: ${{ secrets.AWS_SK }}
+        aws-region: eu-south-2 # Replace
+        
+    - name: List EC2 Instances
+      run: aws ec2 describe-instances --filters "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].InstanceId" --output text
+
+    - name: Start EC2 Instances
+      run: |
+        INSTANCE_IDS=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].InstanceId" --output text)
+        if [ -n "$INSTANCE_IDS" ]; then
+          aws ec2 start-instances --instance-ids $INSTANCE_IDS
+        else
+          echo "No stopped EC2 instances found."
+        fi
